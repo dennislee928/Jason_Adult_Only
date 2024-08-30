@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <h1>Album</h1>
@@ -12,17 +11,17 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useJsonPorn } from '~/composables/useJsonPorn.ts'
+import { ref, onMounted } from "vue";
+import { useJsonPorn } from "~/composables/useJsonPorn.ts";
 
-const data = ref(null)
-const error = ref(null)
+const data = ref(null);
+const error = ref(null);
 
 onMounted(async () => {
   try {
-    data.value = await useJsonPorn('album') // You might need to adjust the API path and params
+    data.value = await useJsonPorn("album"); // You might need to adjust the API path and params
   } catch (err) {
-    error.value = err.message
+    error.value = err.message;
   }
-})
+});
 </script>
