@@ -26,13 +26,13 @@ jobs:
           node-version: '18'  # Use a stable LTS version of Node.js
 
       - name: Install dependencies
-        working-directory: ./
+        working-directory: ./json-porn-nuxt
         run: npm install 
 
       - name: Build
         env:
           NUXT_PUBLIC_API_BASE: ''
-        working-directory: ./
+        working-directory: ./json-porn-nuxt
         run: npx nuxt generate
     
 
