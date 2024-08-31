@@ -1,11 +1,11 @@
 name: Deploy front-page to Cloudflare Pages
+
 on:
   push:
     branches:
       - main
     paths:
       - /**
-      
   pull_request:
     branches:
       - main
@@ -16,6 +16,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -27,22 +28,27 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./json-porn-nuxt
-        run: npm install 
+        run: npm install
 
-      - name: Build
+      - name: Build the project
+        env:
+          NUXT_PUBLIC_API_BASE: ''
+        working-directory: ./json-porn-nuxt
+        run: npm run build
+
+      - name: Generate static files
         env:
           NUXT_PUBLIC_API_BASE: ''
         working-directory: ./json-porn-nuxt
         run: npx nuxt generate
-    
 
       - name: Install Wrangler
-        run: npm install -g wrangler 
+        run: npm install -g wrangler
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUD_FLARE_DEPLOY_API_TOKEN }}
           accountId: ${{ secrets.CLOUD_FLARE_DEPLOY_ACCOUNT_ID }}
-          command: pages deploy ./dist --project-name=jason-adult-only --commit-dirty=true
+          command: pages deploy ./json-porn-nuxt/dist --project-name=json-adult-only --commit-dirty=true
           quiet: false
